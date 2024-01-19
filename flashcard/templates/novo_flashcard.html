@@ -61,11 +61,13 @@
       </div>
     </div>
     <div class="col-md">
-        <form action="{% url 'novo_flashcard' %}" method="GET"> {% csrf_token %}
+      <form action="{% url 'novo_flashcard' %}" method="GET">
+        {% csrf_token %}
         <div class="row">
           <div class="col-md">
             <label for="">Categoria</label>
             <select name="categoria" id="" class="form-select">
+              <option value="">Todas as categorias</option>
               {% for categoria in categorias %}
               <option value="{{categoria.id}}">{{categoria.nome}}</option>
               {% endfor %}
@@ -74,6 +76,7 @@
           <div class="col-md">
             <label for="">Dificuldade</label>
             <select name="dificuldade" id="" class="form-select">
+              <option value="">Todas as dificuldades</option>
               {% for dificuldade in dificuldades %}
               <option value="{{dificuldade.0}}">{{dificuldade.1}}</option>
               {% endfor %}
