@@ -98,26 +98,45 @@
       <br />
 
       {% for flash in flashcards %}
-      <div class="box-new-flashcard">
-        <div class="flashcard">
-          <div class="flashcard-categoria">{{flash.categoria}}</div>
-
-          <a href=""><i class="icone-exit bx bx-x-circle"></i></a>
-          <br />
-          <br />
-          <div class="flashcard-box-item">
-            <p class="flashcard-item">{{flash.pergunta}}</p>
-          </div>
+        <div class="box-new-flashcard"  onclick="flip_card({{flash.id}})">
+            <div class="flashcard {{flash.css_dificuldade}}">
+    
+                <div class="flashcard-categoria">
+                    {{flash.categoria}}
+                </div>
+    
+                <a href=""><i class='icone-exit bx bx-x-circle'></i></a>
+                <br>
+                <br>
+                <div class="flashcard-box-item">
+                    <p class="flashcard-item">{{flash.pergunta}}</p>
+                </div>
+                
+            </div>
+            <div class="resposta-flashcard" id="{{flash.id}}">
+                {{flash.resposta}}
+            </div>
         </div>
-        <div class="resposta-flashcard">{{flash.resposta}}</div>
-      </div>
-      <br />
-      <br />
+        <br>
+        <br>
       {% endfor %}
       <br />
       <br />
     </div>
   </div>
 </div>
+
+<script>
+  function flip_card(id){
+    card = document.getElementById(id)
+
+    if (card.style.display == 'none' || card.style.display == ''){
+        card.style.display = "block"
+    }else{
+        card.style.display = 'none'
+    }
+
+}
+</script>
 
 {% endblock 'conteudo' %}
