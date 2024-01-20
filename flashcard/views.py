@@ -63,11 +63,31 @@ def novo_flashcard(request):
         )
         return redirect('/flashcard/novo_flashcard')
     
-    
+
 def deletar_flashcard(request, id):
-    flashcard = Flashcard.objects.get(id=id)
-    flashcard.delete()
-    messages.add_message(
-        request, constants.SUCCESS, 'Flashcard deletado com sucesso!'
-    )
+    try:
+        flashcard = Flashcard.objects.get(id=id)
+    except Flashcard.DoesNotExist:
+        raise Http404("Flashcard não encontrado")
+
+    if request.user.is_authenticated:
+        # Verifica se o usuário autenticado é o proprietário do flashcard
+        if flashcard.usuario == request.user:
+            flashcard.delete()
+            messages.add_message(
+                request, constants.SUCCESS, 'Flashcard deletado com sucesso!'
+            )
+        else:
+            messages.add_message(
+                request,
+                constants.ERROR,
+                'Você não tem permissão para excluir este flashcard',
+            )
+    else:    
+        messages.add_message(
+            request,
+            constants.ERROR,
+            'Você não está logado nesta conta',
+        )
+
     return redirect('/flashcard/novo_flashcard')
